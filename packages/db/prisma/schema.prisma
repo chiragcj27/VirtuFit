@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  password          String
+  name              String
+  profilePicture    String?
+  phoneNumber     String?
+  country           String?
+  dateOfBirth       DateTime?
+  gender            Gender
+  height            Float
+  weight            Float
+  profession        Profession
+  workoutFrequency  WorkoutFrequency
+  physicalActiveness PhysicalActiveness
+  eatingHabits      EatingHabits
+  dietType          DietType
+  flexibility       Flexibility
+  sleep             String
+  smoking           Boolean
+  alcoholConsumption Boolean
+  workoutHistory    String
+  bodyMeasurements  BodyMeasurements?
+  medicalHistory    MedicalHistory?
+  goal              Goal
+}
+
+model BodyMeasurements {
+  id        String @id @default(uuid())
+  userId    String @unique
+  date      DateTime
+  chest     Float
+  waist     Float
+  hips      Float
+  User      User   @relation(fields: [userId], references: [id])
+}
+
+model MedicalHistory {
+  id             String @id @default(uuid())
+  userId         String @unique
+  medicalCondition String[]
+  surgery        String?
+  injury         String?
+  familyHistory  String?
+  allergies      String?
+  User           User   @relation(fields: [userId], references: [id])
+}
+
+enum Profession {
+  STUDENT
+  WORKING_PROFESSIONAL
+  HOUSEWIFE
+  RETIRED
+  ON_BREAK
+}
+
+enum WorkoutFrequency {
+  DAILY
+  THREE_TIMES_PER_WEEK
+  TWO_TIMES_PER_WEEK
+  ONCE_PER_WEEK
+  OCCASIONAL
+  NEVER
+}
+
+enum PhysicalActiveness {
+  SEDENTARY
+  SLIGHTLY_ACTIVE
+  ACTIVE
+  VERY_ACTIVE
+}
+
+enum EatingHabits {
+  HEALTHY
+  BAD 
+  BALANCED
+}
+
+enum DietType {
+  VEGAN
+  VEGETARIAN
+  NON_VEGETARIAN
+  EGGITARIAN 
+}
+
+enum Flexibility {
+  HIGH
+  LOW
+  MEDIUM
+} 
+
+enum Goal {
+  LOSE_WEIGHT
+  GAIN_WEIGHT
+  BUILD_MUSCLE
+  IMPROVE_HEALTH
+  INCREASE_FLEXIBILITY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+
