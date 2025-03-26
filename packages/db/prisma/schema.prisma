@@ -35,30 +35,32 @@ model User {
   smoking           Boolean
   alcoholConsumption Boolean
   workoutHistory    String
-  bodyMeasurements  BodyMeasurements?
-  medicalHistory    MedicalHistory?
+  bodyMeasurements  BodyMeasurements[]
+  medicalHistory    MedicalHistory[]
   goal              Goal
 }
 
 model BodyMeasurements {
-  id        String @id @default(uuid())
-  userId    String @unique
+  id        String   @id @default(uuid())
+  userId    String
   date      DateTime
   chest     Float
   waist     Float
   hips      Float
-  User      User   @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
 }
 
 model MedicalHistory {
-  id             String @id @default(uuid())
-  userId         String @unique
+  id             String   @id @default(uuid())
+  userId         String
   medicalCondition String[]
   surgery        String?
   injury         String?
   familyHistory  String?
   allergies      String?
-  User           User   @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  User           User     @relation(fields: [userId], references: [id])
 }
 
 enum Profession {
