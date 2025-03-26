@@ -10,8 +10,7 @@ import {
     Goal,
   } from "@prisma/client";
 
-const userSchema = z.object({
-    id: z.string().uuid(),
+const userDetailsSchema = z.object({
     email: z.string().email(),
     password: z.string(),
     name: z.string(),
@@ -20,8 +19,6 @@ const userSchema = z.object({
     country: z.string().optional(),
     dateOfBirth: z.string().transform((str: string) => new Date(str)),
     gender: z.nativeEnum(Gender),
-    height: z.number(),
-    weight: z.number(),
     profession: z.nativeEnum(Profession),
     workoutFrequency: z.nativeEnum(WorkoutFrequency),
     physicalActiveness: z.nativeEnum(PhysicalActiveness),
@@ -34,26 +31,23 @@ const userSchema = z.object({
     workoutHistory: z.string(),
     bodyMeasurements: z
       .object({
-        id: z.string().uuid(),
-        date: z.string().transform((str: string) => new Date(str)),
         chest: z.number(),
         waist: z.number(),
         hips: z.number(),
-        createdAt: z.string().transform((str: string) => new Date(str)),
+        height: z.number(),
+        weight: z.number(),
       })
       .optional(),
     medicalHistory: z
       .object({
-        id: z.string().uuid(),
         medicalCondition: z.array(z.string()),
-        surgery: z.string().optional(),
-        injury: z.string().optional(),
-        familyHistory: z.string().optional(),
-        allergies: z.string().optional(),
-        createdAt: z.string().transform((str: string) => new Date(str)),
+        surgery: z.array(z.string()),
+        injury: z.array(z.string()),
+        familyHistory: z.array(z.string()),
+        allergies: z.array(z.string()),
       })
       .optional(),
     goal: z.nativeEnum(Goal),
   });
 
-  export default userSchema;
+  export default userDetailsSchema;
