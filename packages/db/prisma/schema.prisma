@@ -23,8 +23,6 @@ model User {
   country           String?
   dateOfBirth       DateTime?
   gender            Gender
-  height            Float
-  weight            Float
   profession        Profession
   workoutFrequency  WorkoutFrequency
   physicalActiveness PhysicalActiveness
@@ -43,7 +41,8 @@ model User {
 model BodyMeasurements {
   id        String   @id @default(uuid())
   userId    String
-  date      DateTime
+  height    Float
+  weight    Float
   chest     Float
   waist     Float
   hips      Float
@@ -55,10 +54,10 @@ model MedicalHistory {
   id             String   @id @default(uuid())
   userId         String
   medicalCondition String[]
-  surgery        String?
-  injury         String?
-  familyHistory  String?
-  allergies      String?
+  surgery        String[]
+  injury         String[]
+  familyHistory  String[]
+  allergies      String[]
   createdAt      DateTime @default(now())
   User           User     @relation(fields: [userId], references: [id])
 }
